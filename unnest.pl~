@@ -13,10 +13,8 @@ equals([List1|List1s], [List2|List2s]) :-
   unnest_v1([List1|List1s], FlatL1),
   % unnest list 2
   unnest_v1([List2|List2s], FlatL2),
-  sort(FlatL1,L1sorted),
-  sort(FlatL2,L2sorted),
   % call compareList function
-  compareList(L1sorted, L2sorted).
+  compareList(FlatL1, FlatL2).
 
 % UnnestV1
 
@@ -24,30 +22,30 @@ equals([List1|List1s], [List2|List2s]) :-
   unnest_v1([],[]).
 % append result of flattened list
   unnest_v1([X|Xs],Out) :-
-	unnest_v1(X,FlatX),
-	unnest_v1(Xs,Y),
-	append(FlatX,Y,Out).
+  	unnest_v1(X,FlatX),
+  	unnest_v1(Xs,Y),
+  	append(FlatX,Y,Out).
 
 %  the head of the input list becomes the head of the output list.
   unnest_v1([X|Xs], [X|Y]) :-
-	X \= [],
-	X \= [_|_],
+  	X \= [],
+  	X \= [_|_],
     unnest_v1(Xs,Y).
 
 % UnnestV2
 
     unnest_v2(X,Y) :-
-	unnest_v2(X,[],Y).
+    	unnest_v2(X,[],Y).
 
     % empty list
     unnest_v2([],Acc,Acc).
 
     % flatten tail of the list
     unnest_v2([Head|Tail],Acc,Y) :-
-	unnest_v2(Tail,Acc,TY),
-	unnest_v2(Head,TY,Y).
+    	unnest_v2(Tail,Acc,TY),
+    	unnest_v2(Head,TY,Y).
 
     % if the first argument is not a list.
     unnest_v2(X,Acc,[X|Acc]) :-
-	X \= [],
-	X \= [_|_].
+    	X \= [],
+    	X \= [_|_].
